@@ -1,20 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import SplashScreen from './src/screens/SplashScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MainScreen from './src/screens/MainScreen';
+// import SettingScreen from './src/screens/SettingScreen';
+import BoardScreen from './src/screens/BoardScreen';
+// import PlayScreen from '../src/screens/PlayScreen';
+// import PlayroomScreen from '../src/screens/PlayroomScreen';
 
-export default function App() {
+
+const Stack = createNativeStackNavigator();
+
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SplashScreen"> 
+        <Stack.Screen 
+          name="SplashScreen" 
+          component={SplashScreen} 
+          options={{ headerShown: false }} // Hide header for Splash
+        />
+        <Stack.Screen 
+          name="MainScreen" 
+          component={MainScreen} 
+          options={{ headerShown: false }} />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+        <Stack.Screen
+          name="BoardScreen"
+          component={BoardScreen}
+          options={{ title: 'Select Board' }} // Title for boardScreen
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
