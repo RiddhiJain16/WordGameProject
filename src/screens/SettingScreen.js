@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 
 const SettingScreen = ({ visible, onClose }) => {
   const [timer, setTimer] = useState(true); // Default state for timer
@@ -16,7 +17,10 @@ const SettingScreen = ({ visible, onClose }) => {
       onRequestClose={onClose}
     >
       <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
+        <LinearGradient
+          colors={['#002045', '#04459e', '#c9c9f9']} // Gradient colors
+          style={styles.modalContent}
+        >
           <Text style={styles.title}>Settings</Text>
           
           <TouchableOpacity onPress={toggleTimer} style={styles.option}>
@@ -29,8 +33,10 @@ const SettingScreen = ({ visible, onClose }) => {
             <Text style={styles.optionText}>{sound ? 'On' : 'Off'}</Text>
           </TouchableOpacity>
 
-          <Button title="Close" onPress={onClose} />
-        </View>
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </View>
     </Modal>
   );
@@ -46,13 +52,13 @@ const styles = StyleSheet.create({
   modalContent: {
     width: 300,
     padding: 20,
-    backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
   },
   title: {
     fontSize: 20,
     marginBottom: 20,
+    color: '#ffffff', // White text for contrast
   },
   option: {
     flexDirection: 'row',
@@ -64,6 +70,20 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
+    color: '#ffffff', // White text for contrast
+  },
+  closeButton: {
+    backgroundColor: '#05479b', // Same background color as board buttons
+    padding: 15,
+    marginTop: 20,
+    borderRadius: 5,
+    width: 'relative',
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: '#ffffff', // Same text color as board buttons
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 

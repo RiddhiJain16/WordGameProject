@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+const { width, height } = Dimensions.get('window');
 const SplashScreen = () => {
 
     const nav = useNavigation();
+    
 
     useEffect(() => {
 
         const timer = setTimeout(() => {
             nav.replace('MainScreen');
-        }, 4000);
+        }, 2000);
 
         return() => clearTimeout(timer);
 
@@ -31,8 +33,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       logo: {
-        width: 200,
-        height: 200,
+        width: width,
+        height: height,
       },
 
 });
