@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
+import { LinearGradient } from 'expo-linear-gradient';
 
-const SettingScreen = ({ visible, onClose }) => {
+const SettingScreen = ({ visible, onClose, soundEnabled, setSoundEnabled }) => {
   const [timer, setTimer] = useState(true); // Default state for timer
-  const [sound, setSound] = useState(true); // Default state for sound
+  const [sound, setSound] = useState(soundEnabled); // Default state for sound
 
-  const toggleTimer = () => setTimer(!timer);
-  const toggleSound = () => setSound(!sound);
+  // Update local sound state when soundEnabled prop changes
+  useEffect(() => {
+    setSound(soundEnabled);
+  }, [soundEnabled]);
+
+  const toggleTimer = () => setTimer(prevTimer => !prevTimer);
+
+  const toggleSound = () => {
+    const newSoundState = !sound;
+    setSound(newSoundState);
+    setSoundEnabled(newSoundState); // Notify parent component about the change
+  };
 
   return (
     <Modal
@@ -18,7 +28,7 @@ const SettingScreen = ({ visible, onClose }) => {
     >
       <View style={styles.modalContainer}>
         <LinearGradient
-          colors={['#002045', '#04459e', '#c9c9f9']} // Gradient colors
+          colors={['#002045', '#04459e', '#c9c9f9']}
           style={styles.modalContent}
         >
           <Text style={styles.title}>Settings</Text>
@@ -47,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: 300,
@@ -58,7 +68,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 20,
-    color: '#ffffff', // White text for contrast
+    color: '#ffffff',
   },
   option: {
     flexDirection: 'row',
@@ -70,18 +80,18 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: '#ffffff', // White text for contrast
+    color: '#ffffff',
   },
   closeButton: {
-    backgroundColor: '#05479b', // Same background color as board buttons
+    backgroundColor: '#05479b',
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
-    width: 'relative',
+    width: '100%',
     alignItems: 'center',
   },
   closeButtonText: {
-    color: '#ffffff', // Same text color as board buttons
+    color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold',
   },
